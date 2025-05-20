@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "node dev.js"
+    "dev": "node dev.js",
+    "build": "node build.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
   "description": "",
   "dependencies": {
     "chokidar": "^4.0.3",
+    "sucrase": "^3.35.0",
     "ws": "^8.18.2"
   },
   "devDependencies": {
