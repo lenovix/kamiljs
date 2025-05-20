@@ -13,6 +13,15 @@ if (command === 'dev') {
   devProcess.on('exit', code => {
     process.exit(code);
   });
+} else if (command === 'build'){
+  const devProcess = spawn('node', ['build.js'], {
+    stdio: 'inherit',
+    shell: true
+  });
+
+  devProcess.on('exit', code => {
+    process.exit(code);
+  });
 } else {
   console.log(`❌ Unknown command: ${command}`);
   console.log('Usage: kamil dev');

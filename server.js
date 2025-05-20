@@ -2,12 +2,13 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { getRoutes } from './lib/routes.js';
-import { pathToFileURL } from 'url';
+import { pathToFileURL, fileURLToPath } from 'url';
 import { loadMiddleware } from './lib/loadMiddleware.js';
+import { loadModule } from './lib/loadModule.js';
 
 const routes = getRoutes('./pages');
 const middlewareList = await loadMiddleware();
-const layout = fs.readFileSync('./layout.html', 'utf-8');
+const layout = fs.readFileSync('./public/layout.html', 'utf-8');
 
 const server = http.createServer(async (req, res) => {
   const startTime = Date.now();
@@ -59,8 +60,23 @@ const server = http.createServer(async (req, res) => {
   const pageURL = routes[urlPath];
   if (pageURL) {
     try {
-      const module = await import(pageURL + `?t=${Date.now()}`); // bypass cache
-      const content = module.default();
+      const module = await loadModule(fileURLToPath(pageURL));
+
+      // Jalankan getServerSideProps jika ada
+      let props = {};
+      if (typeof module.getServerSideProps === 'function') {
+        try {
+          const result = await module.getServerSideProps({ req, res }) || {};
+          // Support return { props: {...} } atau langsung {...}
+          props = result.props ?? result;
+        } catch (err) {
+          console.error('❌ Error in getServerSideProps:', err);
+          res.writeHead(500, { 'Content-Type': 'text/plain' });
+          return res.end('500 Internal Server Error (getServerSideProps)');
+        }
+      }
+
+      const content = module.default(props);
       const html = layout.replace('<!--CONTENT-->', content);
       res.writeHead(200, { 'Content-Type': 'text/html' });
       res.end(html);
