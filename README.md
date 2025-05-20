@@ -1,10 +1,8 @@
-# ⚡ KamilJS
+# ⚡ KamilJS v0.0.2
 
 KamilJS adalah framework JavaScript ringan untuk membuat aplikasi web dengan pendekatan mirip Next.js, namun dibuat dari nol sebagai eksperimen dan proyek pembelajaran.
 
 ---
-
-## 🚀 Versi Saat Ini: `v0.0.1`
 
 ### ✨ Fitur
 
@@ -14,6 +12,8 @@ KamilJS adalah framework JavaScript ringan untuk membuat aplikasi web dengan pen
 - ✅ Live browser reload menggunakan WebSocket (`ws`)
 - ✅ Static file serving dari folder `public/`
 - ✅ Styling default bertema **"masa depan"**
+- ✅ Middleware system (seperti Next.js middleware)
+- ✅ Custom 404 page support
 
 ---
 
@@ -34,7 +34,8 @@ kamiljs/
 ├── lib/
 │   └── router.js           # File-based routing logic
 ├── pages/
-│   └── index.js            # Halaman utama
+│   ├── index.js            # Halaman utama
+│   └── 404.js              # Halaman custom 404 (opsional)
 ├── public/
 │   └── reload-client.js    # Script client live reload
 ├── package.json
@@ -42,12 +43,8 @@ kamiljs/
 ```
 
 ## 🛣️ Rencana Fitur Mendatang
-### 🎯 Versi 0.0.2
-- CLI Tool (kamil dev, kamil build)
-- Middleware system (seperti Next.js middleware)
-- Custom 404 page
-
 ### 🎯 Versi 0.0.3
+- Build system (bundler & transpiler)
 - Support JSX/TSX (menggunakan Babel atau Sucrase)
 - Support layout system (misal: _layout.js)
 - Server-side props (semacam getServerSideProps)
@@ -62,4 +59,3 @@ kamiljs/
 
 ## 🤝 Kontribusi
 KamilJS adalah proyek pembelajaran dan eksplorasi pribadi. Jika kamu tertarik untuk berkontribusi, fork repo ini dan buat PR atau issue.
-
